@@ -15,11 +15,11 @@
     }
   </style>
 </head>
-<body class="bg-gray-100 text-gray-900 font-sans" x-data="notesApp()">
+<body class="bg-white-100 text-black-900 font-sans" x-data="notesApp()">
 
 <div class="flex h-screen relative">
   <!-- Topics Sidebar -->
-  <div :class="expandedTopic ? 'w-64' : 'w-16'" class="bg-gray-800 text-gray-100 p-2 transition-all duration-300 ease-in-out relative z-0">
+  <div :class="expandedTopic ? 'w-64' : 'w-16'" class="bg-teal-900 text-gray-100 p-2 transition-all duration-200 ease-in-out relative z-0">
     <div class="flex items-center justify-between px-2 relative">
       <h1 x-show="expandedTopic" class="text-2xl font-bold mb-4">📘 Topics</h1>
     </div>
@@ -27,7 +27,7 @@
       <template x-for="(topic, key) in topics" :key="key">
         <li>
           <button @click="handleTopicClick(key)"
-                  :class="selectedTopic === key ? 'bg-gray-700 text-white' : 'hover:bg-gray-700 hover:text-white'"
+                  :class="selectedTopic === key ? 'bg-teal-700 text-white' : 'hover:bg-teal-600 hover:text-white'"
                   class="w-full text-left text-lg font-medium px-3 py-2 rounded transition flex items-center space-x-2">
             <span x-show="expandedTopic" x-text="topic.name"></span>
             <span x-show="!expandedTopic" x-text="topic.name.substring(0,2)"></span>
@@ -38,31 +38,42 @@
   </div>
 
   <!-- Max/Min Button -->
-  <div class="absolute top-1/2 -translate-y-1/2 z-10 transition-all duration-300 ease-in-out"
-       :class="expandedTopic ? 'left-64' : 'left-16'">
+  <div class="absolute top-1/2 -translate-y-1/2 z-10 transition-all duration-200 ease-in-out"
+       :class="expandedTopic ? 'left-60' : 'left-12'">
     <button @click="expandedTopic = !expandedTopic"
-            class="px-2 py-1 bg-gray-600 text-white rounded hover:bg-gray-500 transition">
-      //
+            class="px-1 py-20 bg-yellow-700 text-white rounded hover:bg-yellow-500 transition">
+            {}
     </button>
   </div>
 
   <!-- Subtopics Sidebar -->
-  <div class="w-64 bg-gray-700 text-white p-4 overflow-y-auto" x-show="selectedTopic">
+  <div class="w-64 bg-yellow-800 text-white p-4 overflow-y-auto" x-show="selectedTopic">
     <h2 class="text-xl font-semibold mb-4" x-text="topics[selectedTopic].name"></h2>
     <ul class="space-y-2">
       <template x-for="(subtopic, index) in topics[selectedTopic].subtopics" :key="index">
         <li>
           <button @click="selectSubtopic(index)"
-                  class="w-full text-left bg-gray-600 hover:bg-gray-500 px-3 py-2 rounded transition">
+                  class="w-full text-left bg-yellow-700 hover:bg-yellow-600 px-3 py-2 rounded transition">
             <span x-text="subtopic.name"></span>
           </button>
         </li>
       </template>
     </ul>
   </div>
-
+  
   <!-- Main Content Area -->
   <div class="flex-1 p-6 overflow-auto">
+    
+    <!-- File Viewer 
+    <div x-show="file" class="w-full h-full">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold text-gray-700">📄 File Preview</h2>
+        <button class="text-sm text-blue-600 hover:underline" @click="file = null">← Back to Subtopics</button>
+      </div>
+      <iframe :src="file" class="w-full h-[80vh] border rounded-lg shadow-lg bg-white"></iframe>
+    </div>
+  -->
+
     <template x-if="!selectedTopic">
       <div class="text-gray-700">
         <h2 class="text-3xl font-bold mb-4">Welcome to My Notes Site</h2>
@@ -117,8 +128,30 @@ function notesApp() {
           }
         ]
       },
-      algo: {
-        name: 'Algorithms',
+      misc: {
+        name: 'Miscellaneous',
+        subtopics: [
+          {
+            name: 'Elliptic Curves',
+            files: [
+              {
+                name: 'Introduction',
+                path: './elliptic_curves.pdf',
+                thumbnail: 'https://picsum.photos/id/1018/300/180',
+                caption: 'Basics of elliptic curves'
+              },
+              {
+                name: 'Pairings',
+                path: './pairings.pdf',
+                thumbnail: 'https://picsum.photos/id/1015/300/180',
+                caption: 'Pairings over elliptic curves'
+              }
+            ]
+          }
+        ]
+      },
+      cryp: {
+        name: 'Classical cryptography',
         subtopics: [
           {
             name: 'Sorting',
@@ -132,7 +165,78 @@ function notesApp() {
             ]
           }
         ]
+      },
+      zkp: {
+        name: 'ZK Proofs',
+        subtopics: [
+          {
+            name: 'PLONK',
+            files: [
+              {
+                name: 'QuickSort',
+                path: './quicksort.pdf',
+                thumbnail: 'https://picsum.photos/id/1005/300/180',
+                caption: 'Quick sort algorithm'
+              }
+            ]
+          },
+          {
+            name: 'Groth16',
+            files: [
+              {
+                name: 'QuickSort',
+                path: './quicksort.pdf',
+                thumbnail: 'https://picsum.photos/id/1005/300/180',
+                caption: 'Quick sort algorithm'
+              }
+            ]
+          },
+          {
+            name: 'Proofs Arg and ZK',
+            files: [
+              {
+                name: 'QuickSort',
+                path: './quicksort.pdf',
+                thumbnail: 'https://picsum.photos/id/1005/300/180',
+                caption: 'Quick sort algorithm'
+              }
+            ]
+          },
+          {
+            name: 'Pairings over ECs',
+            files: [
+              {
+                name: 'QuickSort',
+                path: './quicksort.pdf',
+                thumbnail: 'https://picsum.photos/id/1005/300/180',
+                caption: 'Quick sort algorithm'
+              }
+            ]
+          }
+        ]
       }
+      ,abtme: {
+        name: 'About me',
+        subtopics: [
+          {
+            name: 'Elliptic Curves',
+            files: [
+              {
+                name: 'Introduction',
+                path: './elliptic_curves.pdf',
+                thumbnail: 'https://picsum.photos/id/1018/300/180',
+                caption: 'Basics of elliptic curves'
+              },
+              {
+                name: 'Pairings',
+                path: './pairings.pdf',
+                thumbnail: 'https://picsum.photos/id/1015/300/180',
+                caption: 'Pairings over elliptic curves'
+              }
+            ]
+          }
+        ]
+      },
     },
     toggleTopic(topicKey) {
       if (this.selectedTopic === topicKey) {
