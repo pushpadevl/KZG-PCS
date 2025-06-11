@@ -15,7 +15,11 @@
     }
   </style>
 </head>
-<body class="bg-white-100 text-black-900 font-sans" x-data="notesApp()">
+<body class="bg-white-100 text-black-900 font-sans" x-data="notesApp()" x-init="
+       window.addEventListener('resize', () => {
+         showSidebar = window.innerWidth >= 1024;
+       })
+     ">
 
 <div class="flex h-screen relative">
   <!-- Topics Sidebar -->
@@ -43,19 +47,19 @@
   <div class="absolute top-1/2 -translate-y-1/2 z-10 transition-all duration-200 ease-in-out"
        :class="expandedTopic ? 'left-60' : 'left-12'">
     <button @click="expandedTopic = !expandedTopic"
-            class="px-1 py-20 bg-yellow-600 text-white rounded hover:bg-yellow-500 transition">
+            class="px-1 py-20 bg-teal-600 text-white rounded hover:bg-yellow-500 transition">
             {}
     </button>
   </div>
 
   <!-- Subtopics Sidebar -->
-  <div class="w-64 bg-yellow-700 text-white p-4 overflow-y-auto" x-show="selectedTopic">
+  <div class="w-64 bg-pink-900 text-white p-4 overflow-y-auto" x-show="selectedTopic">
     <h2 class="text-xl font-semibold mb-4" x-text="topics[selectedTopic].name"></h2>
     <ul class="space-y-2">
       <template x-for="(subtopic, index) in topics[selectedTopic].subtopics" :key="index">
         <li>
           <button @click="selectSubtopic(index)"
-                  class="w-full text-left bg-yellow-600 hover:bg-yellow-500 px-3 py-2 rounded transition">
+                  class="w-full text-left bg-pink-600 hover:bg-pink-500 px-3 py-2 rounded transition">
             <span x-text="subtopic.name"></span>
           </button>
         </li>
@@ -100,17 +104,42 @@
         <iframe :src="activeFile.path" class="w-full h-[80vh] border rounded-lg shadow-lg bg-white"></iframe>
       </div>
 
-      <!-- Sub-subtopic List -->
+      <!-- Sub-subtopic List 
       <div class="w-64 bg-gray-100 rounded-lg p-4">
         <h3 class="text-lg font-semibold mb-2">All Files</h3>
         <ul class="list-disc list-inside space-y-1">
           <template x-for="(file, idx) in topics[selectedTopic].subtopics[selectedSubtopic].files" :key="idx">
             <li>
-              <button class="text-left text-blue-700 hover:underline" @click="activeFile = file" x-text="file.name"></button>
+              <button class="text-left text-black-700 hover:underline" @click="activeFile = file" x-text="file.name"></button>
+            </li>
+          </template>
+        </ul>
+      </div>-->
+
+      <div
+        class="w-64 bg-pink-100 rounded-lg p-4"
+        x-show="showSidebar"
+        x-transition
+      >
+        <h3 class="text-lg font-semibold mb-2">All Files</h3>
+        <ul class="list-disc list-inside space-y-1">
+          <template x-for="(file, idx) in topics[selectedTopic].subtopics[selectedSubtopic].files" :key="idx">
+            <li>
+              <button class="text-left text-indigo-700 hover:underline" @click="activeFile = file" x-text="file.name"></button>
             </li>
           </template>
         </ul>
       </div>
+
+      <!-- Toggle sub subtopic sidebar visibility-->
+       <button
+          class="fixed top-2 right-4 bg-pink-900 text-white px-2 py-1/2 rounded shadow lg:hidden"
+          @click="showSidebar = !showSidebar"
+        >
+          ././
+        </button>
+
+
     </div>
   </template>
 </div>
@@ -121,7 +150,7 @@ function notesApp() {
     expandedTopic: true,
     selectedTopic: null,
     selectedSubtopic: null,
-
+    showSidebar: window.innerWidth >= 1024,
     activeFile: null,
     showFileList: false,
     topics: {
