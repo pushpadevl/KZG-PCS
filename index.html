@@ -104,18 +104,6 @@
         <iframe :src="activeFile.path" class="w-full h-[80vh] border rounded-lg shadow-lg bg-white"></iframe>
       </div>
 
-      <!-- Sub-subtopic List 
-      <div class="w-64 bg-gray-100 rounded-lg p-4">
-        <h3 class="text-lg font-semibold mb-2">All Files</h3>
-        <ul class="list-disc list-inside space-y-1">
-          <template x-for="(file, idx) in topics[selectedTopic].subtopics[selectedSubtopic].files" :key="idx">
-            <li>
-              <button class="text-left text-black-700 hover:underline" @click="activeFile = file" x-text="file.name"></button>
-            </li>
-          </template>
-        </ul>
-      </div>-->
-
       <div
         class="w-64 bg-pink-100 rounded-lg p-4"
         x-show="showSidebar"
