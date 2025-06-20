@@ -23,8 +23,7 @@
 
 <div class="flex h-screen relative">
   <!-- Topic Sidebar with curtain-reveal hover -->
-  <!--<div class="relative h-full">
-   Outer wrapper with fixed width -->
+  <!-- Outer wrapper with fixed width -->
   <div class="absolute top-0 left-0 h-full transition-all duration-300 ease-in-out"
        :class="isHovering ? 'w-72' : 'w-16'"
        @mouseenter="isHovering = true"
@@ -57,35 +56,6 @@
       </ul>
     </div>
   </div>
-<!--</div> -->
-
-  <!--
-  <!-- Topic Sidebar with hover expansion and click-based topic selection 
-  <div class="group bg-teal-900 text-gray-100 p-1 transition-all duration-200 ease-in-out relative z-0 h-full"
-      :class="isHovering ? 'w-64' : 'w-16'"
-      @mouseenter="isHovering = true"
-      @mouseleave="isHovering = false">
-    
-    <!-- Heading 
-    <div class="flex items-center justify-between px-2 relative">
-      <h1 x-show="isHovering" class="text-2xl font-bold mb-4">📘 Topics</h1>
-      <h1 x-show="!isHovering" class="text-2xl font-bold mb-4">📘</h1>
-    </div>
-
-    <!-- Topic Buttons 
-    <ul class="space-y-2 mt-6">
-      <template x-for="(topic, key) in topics" :key="key">
-        <li>
-          <button @click="handleTopicClick(key)"
-                  :class="selectedTopic === key ? 'bg-teal-700 text-white' : 'hover:bg-teal-600 hover:text-white'"
-                  class="w-full text-left text-lg font-medium px-3 py-2 rounded transition flex items-center space-x-1">
-            <span x-show="isHovering" x-text="topic.name"></span>
-            <span x-show="!isHovering" x-text="topic.name.substring(0,2)"></span>
-          </button>
-        </li>
-      </template>
-    </ul>
-  </div>-->
 
   <!-- Subtopics Sidebar -->
   <div class="ml-16 w-56 bg-yellow-700 text-white p-4 overflow-y-auto" x-show="selectedTopic">
